@@ -3,7 +3,7 @@
 <div class="container" ng-controller="LoginController as vm">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-            
+
             <div class="login-logo">
                 <img src="/admin/images/main/upme-white-shaddow.png" alt="Upme logo">
             </div>
