@@ -5,6 +5,7 @@ CMS built on Laravel, AngularJS and Material Design
 ## Features
 
 - Users/User Roles, Posts, Gallery, Profile  CRUD
+- Authentication
 - John papa Angular style
 - Material Design
 - Image Manipulation
@@ -80,6 +81,20 @@ output files
 
 ````
 public/admin/js
+````
+
+## CSS
+
+Css is written in sass. if you don't want to use sass just navigate to
+
+````
+public/admin/css/app.css
+````
+
+and change css import file in
+
+````
+resources/views/admin/layouts/header.blade.php
 ````
 
 ## Sass

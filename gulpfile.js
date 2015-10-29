@@ -36,8 +36,8 @@ var appSass = [
 
 elixir(function(mix) {
     mix.styles(cssPlugins, 'public/admin/css/dep.css');
-    mix.sass(appSass, 'public/admin/css/app.css');
+    mix.sass(appSass, 'public/admin/css/app.min.css');
     mix.annotate(appScripts, 'public/admin/js/annotated.js');
     mix.scripts(jsPlugins, 'public/admin/js/dep.js');
-    mix.scripts('../../../public/admin/js/annotated.js', 'public/admin/js/app.js');
+    mix.scripts('../../../public/admin/js/annotated.js', 'public/admin/js/app.min.js');
 });

@@ -61,16 +61,6 @@
     'use strict';
 
     angular
-        .module('app.gallery', [
-            'app.core'
-        ]);
-
-}());
-(function() {
-
-    'use strict';
-
-    angular
         .module('app.login', [
             'app.core'
         ]);
@@ -81,7 +71,7 @@
     'use strict';
 
     angular
-        .module('app.profile', [
+        .module('app.gallery', [
             'app.core'
         ]);
 
@@ -102,8 +92,18 @@
     'use strict';
 
     angular
-        .module('app.router', [
-            'ui.router'
+        .module('app.profile', [
+            'app.core'
+        ]);
+
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.services', [
+            'app.core'
         ]);
 
 }());
@@ -122,8 +122,8 @@
     'use strict';
 
     angular
-        .module('app.services', [
-            'app.core'
+        .module('app.router', [
+            'ui.router'
         ]);
 
 }());
@@ -395,6 +395,68 @@
     'use strict';
 
     angular
+        .module("app.login")
+        .controller('LoginController', LoginController);
+
+    LoginController.$inject = ['$http', '$window'];
+    /* @nginject */
+    function LoginController($http, $window) {
+
+        var vm = this;
+
+        vm.user = {};
+        vm.login = login;
+
+        /**
+         * Login
+         */
+        function login() {
+            $http.post('/admin/login', {user: vm.user})
+                .success(function (res) {
+                    $window.location.href = '/admin/dashboard';
+                })
+                .error(function(res) {
+                    vm.error = res;
+                });
+        }
+
+    }
+
+}());
+
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.login')
+        .run(appRun);
+
+    appRun.$inject = ['routerHelper'];
+    /* @ngInject */
+    function appRun(routerHelper) {
+        routerHelper.configureStates(getStates());
+    }
+
+    function getStates() {
+        return [
+            {
+                state: 'login',
+                config: {
+                    url: '/admin/login',
+                    controller: 'LoginController',
+                    controllerAs: 'vm',
+                    title: 'Login'
+                }
+            }
+        ];
+    }
+})();
+(function() {
+
+    'use strict';
+
+    angular
         .module('app.gallery')
         .controller('GalleryController', GalleryController);
 
@@ -621,185 +683,6 @@
                     controller: 'GalleryController',
                     controllerAs: 'vm',
                     title: 'Edit Gallery'
-                }
-            }
-        ];
-    }
-})();
-(function() {
-
-    'use strict';
-
-    angular
-        .module("app.login")
-        .controller('LoginController', LoginController);
-
-    LoginController.$inject = ['$http', '$window'];
-    /* @nginject */
-    function LoginController($http, $window) {
-
-        var vm = this;
-
-        vm.user = {};
-        vm.login = login;
-
-        /**
-         * Login
-         */
-        function login() {
-            $http.post('/admin/login', {user: vm.user})
-                .success(function (res) {
-                    $window.location.href = '/admin/dashboard';
-                })
-                .error(function(res) {
-                    vm.error = res;
-                });
-        }
-
-    }
-
-}());
-
-(function() {
-
-    'use strict';
-
-    angular
-        .module('app.login')
-        .run(appRun);
-
-    appRun.$inject = ['routerHelper'];
-    /* @ngInject */
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
-    }
-
-    function getStates() {
-        return [
-            {
-                state: 'login',
-                config: {
-                    url: '/admin/login',
-                    controller: 'LoginController',
-                    controllerAs: 'vm',
-                    title: 'Login'
-                }
-            }
-        ];
-    }
-})();
-(function() {
-
-    'use strict';
-
-    angular
-        .module('app.profile')
-        .controller('ProfileController', ProfileController);
-
-    ProfileController.$inject = ['$http', '$timeout', 'User', 'AuthUser'];
-    /* @ngInject */
-    function ProfileController($http, $timeout, User, AuthUser) {
-
-        var vm = this;
-
-        vm.authuser = {};
-
-        vm.update = update;
-        vm.deleteImage = deleteImage;
-        vm.hideImage = hideImage;
-        authUser();
-
-        /**
-         * Auth user
-         */
-        function authUser() {
-            AuthUser.get().success(function(res) {
-                vm.authUser = res;
-                vm.ready = true;
-            });
-        }
-
-        /**
-         * update
-         */
-        function update() {
-
-            vm.loading = true;
-
-            User.update({id: vm.authUser.id}, vm.authUser, function (res) {
-                _successResponse(res.message);
-            }, function (err) {
-                _errorResponse(err.data, 'User edition failed, see errors below');
-            });
-        }
-
-        /**
-         * Delete image
-         */
-        function deleteImage(id) {
-            $http.post('/admin/api/destroy-user-image', {id: id}).success(function(res) {
-                vm.authUser.image = false;
-            });
-        }
-
-        /**
-         * Hide image
-         */
-        function hideImage() {
-            vm.authUser.file = false;
-        }
-
-        /**
-         * Success response
-         */
-        function _successResponse(successMessage) {
-            vm.errors = '';
-            vm.flash = successMessage;
-            vm.loading = false;
-            $timeout(function () {
-                vm.flash = false;
-            }, 5000);
-        }
-
-        /**
-         * Errors response
-         */
-        function _errorResponse(errors, flashError) {
-            vm.errors = errors;
-            vm.loading = false;
-            vm.flashError = flashError;
-            $timeout(function () {
-                vm.flashError = false;
-            }, 5000);
-        }
-
-    }
-
-}());
-(function() {
-
-    'use strict';
-
-    angular
-        .module('app.profile')
-        .run(appRun);
-
-    appRun.$inject = ['routerHelper'];
-    /* @ngInject */
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
-    }
-
-    function getStates() {
-        return [
-            {
-                state: 'profile',
-                config: {
-                    url: '/admin/profile',
-                    templateUrl: '/admin/views/admin.profile.index',
-                    controller: 'ProfileController',
-                    controllerAs: 'vm',
-                    title: 'My Profile'
                 }
             }
         ];
@@ -1040,108 +923,203 @@
         ];
     }
 })();
-/* Help configure the state-base ui.router */
 (function() {
 
     'use strict';
 
     angular
-        .module('app.router')
-        .provider('routerHelper', routerHelperProvider);
+        .module('app.profile')
+        .controller('ProfileController', ProfileController);
 
-    routerHelperProvider.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
+    ProfileController.$inject = ['$http', '$timeout', 'User', 'AuthUser'];
     /* @ngInject */
-    function routerHelperProvider($locationProvider, $stateProvider, $urlRouterProvider) {
-        /* jshint validthis:true */
-        var config = {
-            docTitle: 'Admin',
-            resolveAlways: {}
-        };
+    function ProfileController($http, $timeout, User, AuthUser) {
 
-        $locationProvider.html5Mode(true);
+        var vm = this;
 
-        this.configure = function(cfg) {
-            angular.extend(config, cfg);
-        };
+        vm.authuser = {};
 
-        this.$get = RouterHelper;
-        RouterHelper.$inject = ['$location', '$rootScope', '$state'];
-        /* @ngInject */
-        function RouterHelper($location, $rootScope, $state, logger) {
-            var handlingStateChangeError = false;
-            var hasOtherwise = false;
-            var stateCounts = {
-                errors: 0,
-                changes: 0
-            };
+        vm.update = update;
+        vm.deleteImage = deleteImage;
+        vm.hideImage = hideImage;
+        authUser();
 
-            var service = {
-                configureStates: configureStates,
-                getStates: getStates,
-                stateCounts: stateCounts
-            };
+        /**
+         * Auth user
+         */
+        function authUser() {
+            AuthUser.get().success(function(res) {
+                vm.authUser = res;
+                vm.ready = true;
+            });
+        }
 
-            init();
+        /**
+         * update
+         */
+        function update() {
 
-            return service;
+            vm.loading = true;
 
-            function configureStates(states, otherwisePath) {
-                states.forEach(function(state) {
-                    state.config.resolve =
-                        angular.extend(state.config.resolve || {}, config.resolveAlways);
-                    $stateProvider.state(state.state, state.config);
-                });
-                if (otherwisePath && !hasOtherwise) {
-                    hasOtherwise = true;
-                    $urlRouterProvider.otherwise(otherwisePath);
+            User.update({id: vm.authUser.id}, vm.authUser, function (res) {
+                _successResponse(res.message);
+            }, function (err) {
+                _errorResponse(err.data, 'User edition failed, see errors below');
+            });
+        }
+
+        /**
+         * Delete image
+         */
+        function deleteImage(id) {
+            $http.post('/admin/api/destroy-user-image', {id: id}).success(function(res) {
+                vm.authUser.image = false;
+            });
+        }
+
+        /**
+         * Hide image
+         */
+        function hideImage() {
+            vm.authUser.file = false;
+        }
+
+        /**
+         * Success response
+         */
+        function _successResponse(successMessage) {
+            vm.errors = '';
+            vm.flash = successMessage;
+            vm.loading = false;
+            $timeout(function () {
+                vm.flash = false;
+            }, 5000);
+        }
+
+        /**
+         * Errors response
+         */
+        function _errorResponse(errors, flashError) {
+            vm.errors = errors;
+            vm.loading = false;
+            vm.flashError = flashError;
+            $timeout(function () {
+                vm.flashError = false;
+            }, 5000);
+        }
+
+    }
+
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.profile')
+        .run(appRun);
+
+    appRun.$inject = ['routerHelper'];
+    /* @ngInject */
+    function appRun(routerHelper) {
+        routerHelper.configureStates(getStates());
+    }
+
+    function getStates() {
+        return [
+            {
+                state: 'profile',
+                config: {
+                    url: '/admin/profile',
+                    templateUrl: '/admin/views/admin.profile.index',
+                    controller: 'ProfileController',
+                    controllerAs: 'vm',
+                    title: 'My Profile'
                 }
             }
+        ];
+    }
+})();
+(function() {
 
-            function handleRoutingErrors() {
-                // Route cancellation:
-                // On routing error, go to the dashboard.
-                // Provide an exit clause if it tries to do it twice.
-                $rootScope.$on('$stateChangeError',
-                    function(event, toState, toParams, fromState, fromParams, error) {
-                        if (handlingStateChangeError) {
-                            return;
-                        }
-                        stateCounts.errors++;
-                        handlingStateChangeError = true;
-                        var destination = (toState &&
-                            (toState.title || toState.name || toState.loadedTemplateUrl)) ||
-                            'unknown target';
-                        var msg = 'Error routing to ' + destination + '. ' +
-                            (error.data || '') + '. <br/>' + (error.statusText || '') +
-                            ': ' + (error.status || '');
-                        logger.warning(msg, [toState]);
-                        $location.path('/');
-                    }
-                );
-            }
+    'use strict';
 
-            function init() {
-                handleRoutingErrors();
-                updateDocTitle();
-            }
+    angular
+        .module("app.services")
+        .factory("AuthUser", AuthUser);
 
-            function getStates() { return $state.get(); }
+    AuthUser.$inject = ['$http'];
+    /* @ngInject */
+    function AuthUser($http) {
+        var service = {
+            get: get
+        };
 
-            function updateDocTitle() {
-                $rootScope.$on('$stateChangeSuccess',
-                    function(event, toState, toParams, fromState, fromParams) {
-                        stateCounts.changes++;
-                        handlingStateChangeError = false;
-                        var title = (toState.title || '') + ' · ' + config.docTitle;
-                        $rootScope.mainUrl = $state.current.url.split('/')[2];
-                        $rootScope.title = title; // data bind to <title>
-                    }
-                );
-            }
+        return service;
+
+        function get() {
+            return $http.get('/admin/api/auth-user');
         }
     }
 
-})();
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module("app.gallery")
+        .factory("Gallery", Gallery);
+
+    Gallery.$inject = ['$resource'];
+    /* @ngInject */
+    function Gallery($resource) {
+        return $resource('/admin/api/gallery/:id', {id: '@_id'}, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    }
+
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module("app.services")
+        .factory("Post", Post);
+
+    Post.$inject = ['$resource'];
+    /* @ngInject */
+    function Post($resource) {
+        return $resource('/admin/api/posts/:id', {id: '@_id'}, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    }
+
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module("app.services")
+        .factory("User", User);
+
+    User.$inject = ['$resource'];
+    /* @ngInject */
+    function User($resource) {
+        return $resource('/admin/api/users/:id', {id: '@_id'}, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    }
+
+}());
 (function() {
 
     'use strict';
@@ -1408,83 +1386,105 @@
         ];
     }
 })();
+/* Help configure the state-base ui.router */
 (function() {
 
     'use strict';
 
     angular
-        .module("app.services")
-        .factory("AuthUser", AuthUser);
+        .module('app.router')
+        .provider('routerHelper', routerHelperProvider);
 
-    AuthUser.$inject = ['$http'];
+    routerHelperProvider.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
     /* @ngInject */
-    function AuthUser($http) {
-        var service = {
-            get: get
+    function routerHelperProvider($locationProvider, $stateProvider, $urlRouterProvider) {
+        /* jshint validthis:true */
+        var config = {
+            docTitle: 'Admin',
+            resolveAlways: {}
         };
 
-        return service;
+        $locationProvider.html5Mode(true);
 
-        function get() {
-            return $http.get('/admin/api/auth-user');
+        this.configure = function(cfg) {
+            angular.extend(config, cfg);
+        };
+
+        this.$get = RouterHelper;
+        RouterHelper.$inject = ['$location', '$rootScope', '$state'];
+        /* @ngInject */
+        function RouterHelper($location, $rootScope, $state, logger) {
+            var handlingStateChangeError = false;
+            var hasOtherwise = false;
+            var stateCounts = {
+                errors: 0,
+                changes: 0
+            };
+
+            var service = {
+                configureStates: configureStates,
+                getStates: getStates,
+                stateCounts: stateCounts
+            };
+
+            init();
+
+            return service;
+
+            function configureStates(states, otherwisePath) {
+                states.forEach(function(state) {
+                    state.config.resolve =
+                        angular.extend(state.config.resolve || {}, config.resolveAlways);
+                    $stateProvider.state(state.state, state.config);
+                });
+                if (otherwisePath && !hasOtherwise) {
+                    hasOtherwise = true;
+                    $urlRouterProvider.otherwise(otherwisePath);
+                }
+            }
+
+            function handleRoutingErrors() {
+                // Route cancellation:
+                // On routing error, go to the dashboard.
+                // Provide an exit clause if it tries to do it twice.
+                $rootScope.$on('$stateChangeError',
+                    function(event, toState, toParams, fromState, fromParams, error) {
+                        if (handlingStateChangeError) {
+                            return;
+                        }
+                        stateCounts.errors++;
+                        handlingStateChangeError = true;
+                        var destination = (toState &&
+                            (toState.title || toState.name || toState.loadedTemplateUrl)) ||
+                            'unknown target';
+                        var msg = 'Error routing to ' + destination + '. ' +
+                            (error.data || '') + '. <br/>' + (error.statusText || '') +
+                            ': ' + (error.status || '');
+                        logger.warning(msg, [toState]);
+                        $location.path('/');
+                    }
+                );
+            }
+
+            function init() {
+                handleRoutingErrors();
+                updateDocTitle();
+            }
+
+            function getStates() { return $state.get(); }
+
+            function updateDocTitle() {
+                $rootScope.$on('$stateChangeSuccess',
+                    function(event, toState, toParams, fromState, fromParams) {
+                        stateCounts.changes++;
+                        handlingStateChangeError = false;
+                        var title = (toState.title || '') + ' · ' + config.docTitle;
+                        $rootScope.mainUrl = $state.current.url.split('/')[2];
+                        $rootScope.title = title; // data bind to <title>
+                    }
+                );
+            }
         }
     }
 
-}());
-(function() {
-
-    'use strict';
-
-    angular
-        .module("app.gallery")
-        .factory("Gallery", Gallery);
-
-    Gallery.$inject = ['$resource'];
-    /* @ngInject */
-    function Gallery($resource) {
-        return $resource('/admin/api/gallery/:id', {id: '@_id'}, {
-            update: {
-                method: 'PUT'
-            }
-        });
-    }
-
-}());
-(function() {
-
-    'use strict';
-
-    angular
-        .module("app.services")
-        .factory("Post", Post);
-
-    Post.$inject = ['$resource'];
-    /* @ngInject */
-    function Post($resource) {
-        return $resource('/admin/api/posts/:id', {id: '@_id'}, {
-            update: {
-                method: 'PUT'
-            }
-        });
-    }
-
-}());
-(function() {
-
-    'use strict';
-
-    angular
-        .module("app.services")
-        .factory("User", User);
-
-    User.$inject = ['$resource'];
-    /* @ngInject */
-    function User($resource) {
-        return $resource('/admin/api/users/:id', {id: '@_id'}, {
-            update: {
-                method: 'PUT'
-            }
-        });
-    }
-
-}());
+})();
