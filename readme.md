@@ -1,6 +1,6 @@
 # Laravel and AngularJS CMS
 
-CMS built on Laravel, AngularJS and Material Design
+CMS built on Laravel 5.1, AngularJS 1.4.7 and Material Design
 
 ## Features
 
