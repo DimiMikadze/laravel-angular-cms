@@ -13,14 +13,10 @@ CMS built on Laravel, AngularJS and Material Design
 
 ## Demo
 
-````
-
 Email: demo@demo.com
 Password: demodemo
 
 [DEMO](http://admin.upmelab.com/admin/login)
-
-````
 
 ## Getting Started
 
