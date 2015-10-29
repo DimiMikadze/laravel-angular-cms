@@ -35,12 +35,9 @@ var appSass = [
 ];
 
 elixir(function(mix) {
-    mix.sass(appSass, 'public/admin/css/admin.css');
-    mix.scripts(appScripts, 'public/admin/js/app.js');
-
-    //mix.styles(cssPlugins, 'public/admin/css/dep.css');
-    //mix.sass(appSass, 'public/admin/css/admin.css');
-    //mix.annotate(appScripts, 'public/admin/js/annotated.js');
-    //mix.scripts(jsPlugins, 'public/admin/js/dep.js');
-    //mix.scripts('../../../public/admin/js/annotated.js', 'public/admin/js/app.js');
+    mix.styles(cssPlugins, 'public/admin/css/dep.css');
+    mix.sass(appSass, 'public/admin/css/app.css');
+    mix.annotate(appScripts, 'public/admin/js/annotated.js');
+    mix.scripts(jsPlugins, 'public/admin/js/dep.js');
+    mix.scripts('../../../public/admin/js/annotated.js', 'public/admin/js/app.js');
 });

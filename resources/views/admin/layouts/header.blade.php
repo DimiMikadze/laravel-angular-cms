@@ -9,7 +9,7 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/admin/css/dep.css"/>
-    <link rel="stylesheet" href="/admin/css/admin.css">
+    <link rel="stylesheet" href="/admin/css/app.css">
 
     <link rel="shortcut icon" type="image/png" href=""/>
     <base href="/">
