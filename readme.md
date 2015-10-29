@@ -1,27 +1,105 @@
-## Laravel PHP Framework
+# Laravel and AngularJS CMS
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+CMS built on Laravel, AngularJS and Material Design
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+## Features
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+- Users/User Roles, Posts, Gallery, Profile  CRUD
+- John papa Angular style
+- Material Design
+- Image Manipulation
+- Sass
 
-## Official Documentation
+## Getting Started
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Clone Repo
+
+````
+git clone https://github.com/DimitriMikadze/laravel-angular-cms.git
+````
+
+Create Database
+
+Cd project and run composer update and npm install
+
+````
+cd laravel-angular-cms
+composer update
+npm install
+````
+
+Add .env file to root directory.
+
+Example:
+
+````
+see .env.example file
+````
+
+Migrate tables
+
+````
+php artisan migrate
+````
+
+Seed tables
+
+````
+php artisan db:seed
+````
+
+Start Server
+
+````
+php artisan serve
+````
+
+## gulp
+
+watch changes
+
+````
+gulp watch
+````
+
+## gulp minify stylesheets and scripts
+
+````
+gulp --production
+````
+
+## Angular
+
+you can find angular files in
+
+````
+resources/assets/js/admin/app
+````
+
+output files
+
+````
+public/admin/js
+````
+
+## Sass
+
+Sass files
+
+````
+resources/assets/sass/admin
+````
+
+output files
+
+````
+public/admin/css
+````
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+contributions are more than welcome!
 
-## Security Vulnerabilities
+## License
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+See license.txt
