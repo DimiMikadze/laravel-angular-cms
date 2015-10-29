@@ -55,6 +55,19 @@ Start Server
 php artisan serve
 ````
 
+Navigate to
+
+````
+localhost:8000/admin/profile
+````
+
+User credentials:
+
+````
+email: admin@gmail.com
+password: secret
+````
+
 ## gulp
 
 watch changes
