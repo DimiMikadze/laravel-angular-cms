@@ -40,13 +40,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $images = [];
-        foreach($request->file() as $image) {
-            $image->move(public_path() . '/admin/images/posts', $image->getClientOriginalName());
-        }
-
-        return $image;
-
         $this->validate($request, [
             'title'         => 'required|min:3|max:100',
             'description'   => 'required|min:10',

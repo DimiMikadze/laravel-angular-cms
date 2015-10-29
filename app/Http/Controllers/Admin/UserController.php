@@ -146,9 +146,6 @@ class UserController extends Controller
                 $image = ImageHelper::create($request->file, 600, 'admin/images/users/');
 
                 $data['image'] = $image['filename'];
-                $data['image'] = $image->getClientOriginalName();
-                $request->file('file')->move(public_path() . '/admin/images/users', $image->getClientOriginalName());
-
             }
 
             $user->update($data);

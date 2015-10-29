@@ -88,7 +88,7 @@
                 });
             } else {
                 $http.post('/admin/api/destroy-post-image', {id: id }).success(function(res) {
-                    vm.post.image = false;
+                    vm.post.image = null;
                 });
             }
         }
@@ -102,7 +102,7 @@
                 vm.post.files.splice(index, 1);
             } else {
                 document.getElementById('single-uploader').value = null;
-                vm.post.file = false;
+                vm.post.file = null;
             }
         }
 

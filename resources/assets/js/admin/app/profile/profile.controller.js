@@ -48,7 +48,8 @@
          */
         function deleteImage(id) {
             $http.post('/admin/api/destroy-user-image', {id: id}).success(function(res) {
-                vm.authUser.image = false;
+                vm.authUser.file = null;
+                vm.authUser.image = null;
             });
         }
 

@@ -73,7 +73,6 @@
                             <input type="file" fileread="vm.authUser.file" id="single-uploader">
                         </div>
                     </div>
-<<<<<<< HEAD
                 </div>
 
                 <!-- image preview -->
@@ -84,20 +83,6 @@
                             <div class="not-image" ng-show="!vm.authUser.file.isImage">
                                 <p><i class="material-icons">warning</i></p>
                                 <p>File is not an Image</p>
-=======
-
-                    <input type="hidden" ng-model="vm.isUploaded">
-
-                    <!-- image uploader -->
-                    <div image-uploader mymodel="vm.authUser" delete="vm.deleteImage()" ng-if="!vm.isUploaded"></div>
-
-                    <!-- image -->
-                    <div class="admin_image_container admin_single_image" ng-if="vm.isUploaded">
-                        <div class="admin_image">
-                            <div class="admin_image_box">
-                                <img ng-src="/admin/images/users/@{{ vm.authUser.image }}">
-                                <p class="delete_img" ng-click="vm.deleteImage(vm.authUser.id)">x</p>
->>>>>>> origin/master
                             </div>
                         </div>
                         <button class="btn btn-dlt-img" ng-click="vm.hideImage()">Delete</button>

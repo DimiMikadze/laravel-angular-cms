@@ -89,7 +89,7 @@
                 });
             } else {
                 $http.post('/admin/api/destroy-gallery-image', {id: id }).success(function(res) {
-                    vm.gallery.image = false;
+                    vm.gallery.image = null;
                 });
             }
         }
@@ -103,7 +103,7 @@
                 vm.gallery.files.splice(index, 1);
             } else {
                 document.getElementById('single-uploader').value = null;
-                vm.gallery.file = false;
+                vm.gallery.file = null;
             }
         }
 

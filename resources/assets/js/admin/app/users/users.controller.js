@@ -82,24 +82,7 @@
          * update user
          */
         function update() {
-
             vm.loading = true;
-
-            if (vm.user.image) {
-                var file = File.create('/upme/api/users', vm.user, vm.user.image);
-
-                file.then(function (res) {
-                    _successResponse(res.data.message, 'users')
-                }, function (err) {
-                    _errorResponse(err.data);
-                });
-            } else {
-                User.save(vm.user, function (res) {
-                    _successResponse(res.message, 'users')
-                }, function (err) {
-                    _errorResponse(err.data);
-                });
-            }
 
             User.update({id: vm.user.id}, vm.user, function (res) {
                 _successResponse(res.message)
@@ -176,7 +159,7 @@
         function deleteImage(id) {
             $http.post('/admin/api/destroy-user-image', {id: id}).success(function(res) {
                 document.getElementById('single-uploader').value = null;
-                vm.user.image = false;
+                vm.user.image = null;
             });
         }
 

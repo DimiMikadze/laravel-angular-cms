@@ -76,7 +76,6 @@
                         </div>
                         <button class="btn btn-dlt-img" ng-click="vm.hideImage()">Delete</button>
                     </div>
-<<<<<<< HEAD
                 </div>
 
                 <!-- multiple image -->
@@ -89,16 +88,6 @@
                             </button>
                             <input type="file" fileread-multiple="vm.post.files" id="multiple-uploader" multiple>
                         </div>
-=======
-
-                    <!-- image uploader -->
-                    <div image-uploader-multiple mymodel="vm.post" delete="vm.deleteImage(index)" main="vm.setMainImage(index)"></div>
-
-                    <!-- Submit -->
-                    <div class="form_submit">
-                        <i ng-show="vm.loading" class="fa fa-spinner fa-spin"></i>
-                        <button ng-show="!vm.loading"  ng-click="vm.create()" class="btn submit_button">Create</button>
->>>>>>> origin/master
                     </div>
                 </div>
 

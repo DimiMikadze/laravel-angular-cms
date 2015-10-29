@@ -13,7 +13,7 @@
                 <div class="panel-body">
 
                     <!-- errors -->
-                    <div class="alert alert-danger animated swing" role="alert" ng-if="vm.error">
+                    <div class="alert alert-danger" role="alert" ng-if="vm.error">
                         <i class="material-icons">error</i>
                         <p ng-bind="vm.error"></p>
                     </div>
