@@ -18,7 +18,7 @@ Password: demodemo  <br />
 
 [http://admin.upmelab.com/admin/login](http://admin.upmelab.com/admin/login)
 
-## Screenshots
+## Screenshot
 
 ![Alt text](/public/admin/images/main/admin.png)
 
