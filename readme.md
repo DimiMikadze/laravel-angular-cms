@@ -25,7 +25,7 @@ Cd project and run composer install and npm install
 
 ````
 cd laravel-angular-cms
-composer update
+composer install
 npm install
 ````
 
