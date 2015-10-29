@@ -40,7 +40,7 @@ class UserTableSeeder extends Seeder
                 'email'     => 'demo@demo.com',
                 'password'  => bcrypt('demodemo'),
                 'image'     => 'minion4.jpg',
-                'role'      => 1
+                'role'      => 2
             ],
             [
                 'name'      => 'Ben Doe',
