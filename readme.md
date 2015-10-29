@@ -11,6 +11,17 @@ CMS built on Laravel, AngularJS and Material Design
 - Image Manipulation
 - Sass
 
+## Demo
+
+````
+
+Email: demo@demo.com
+Password: demodemo
+
+http://admin.upmelab.com/admin/login
+
+````
+
 ## Getting Started
 
 Clone Repo
