@@ -1,0 +1,51 @@
+.dashboard-link {
+  text-decoration: none !important;
+}
+
+.count-container {
+  height: 5em;
+  color: $white;
+  text-align: center;
+  line-height: 5em;
+  @include font-size(15px);
+  @include shaddow-box(2);
+  @include transition(all 0.3s ease);
+  cursor: pointer;
+  margin-bottom: 2em;
+
+  &:hover {
+    @include shaddow-box(3);
+    @include transition-scale(scale(1.01));
+  }
+
+  .count-dark {
+    @include font-size(20px);
+    width: 40%;
+    float: left;
+  }
+  .count-number {
+    @include font-size(20px);
+    margin-left: 0.5em;
+  }
+}
+.error-page-header {
+  color: $red !important;
+}
+.users-count {
+  background-color: darken($yellow, 10%);
+  .count-dark {
+    background-color: darken($yellow, 15%);
+  }
+}
+.posts-count {
+  background-color: $purple;
+  .count-dark {
+    background-color: darken($purple, 15%);
+  }
+}
+.galleries-count {
+  background-color: $green-gray;
+  .count-dark {
+    background-color: darken($green-gray, 15%);
+  }
+}

@@ -1,0 +1,178 @@
+.input-group {
+  width: 100%;
+
+  select {
+    background-color: inherit;
+  }
+}
+.form-group-upload {
+  margin-top: 1em !important;
+}
+button {
+  outline: none !important;
+}
+.btn {
+  outline: none !important;
+}
+.user-roles select {
+  width: 10em;
+}
+
+
+/* Submit button */
+.btn-submit {
+  color: $white;
+  background-color: $green;
+  @include font-size(15px);
+  padding: 0.5em 2em;
+  @include shaddow-box(1);
+  margin-top: 3em;
+  &:hover {
+    @include shaddow-box(2);
+    color: $white !important;
+  }
+}
+
+/* Uploader */
+.uploader {
+
+  .btn-upload {
+    color: $white;
+    background-color: $light-blue;
+    outline: none;
+    margin-top: 1em;
+    @include shaddow-box(1);
+
+    &:hover {
+      @include transition-scale(scale(1.01));
+      @include shaddow-box(2);
+    }
+  }
+
+  input {
+    filter: alpha(opacity=0);
+    opacity: 0;
+  }
+  .upload-icon {
+    display: block;
+  }
+}
+
+.ta-editor {
+  border: 1px solid $light-gray !important;
+}
+
+/* Images */
+
+.image-container {
+  width: 100%;
+  overflow: hidden;
+  clear: both;
+  text-align: center;
+  margin-bottom: 2em;
+
+  .a-image {
+    width: 10em;
+    height: 8em;
+    overflow: hidden;
+
+    .not-image {
+      color: $red;
+      width: 9em;
+      text-align: center;
+      p {
+        &:first-child {
+          margin-top: 1em;
+        }
+        margin: 0;
+      }
+    }
+    img {
+      width: 10em;
+      min-height: 8em;
+    }
+  }
+  .img-btn-container {
+    background-color: $light-gray;
+    width: 10em;
+    overflow: hidden;
+    float: left;
+    margin: 0.5em;
+    height: 12em;
+    border: 5px solid $light-gray;
+    border-radius: 0.2em;
+    @include shaddow-box(1);
+    margin-bottom: 0.2em;
+
+    .btn-dlt-img {
+      background-color: $red;
+      color: $white;
+      margin-top: 1em;
+      margin-bottom: 0.5em;
+      &:hover {
+        @include shaddow-box(2);
+      }
+    }
+  }
+}
+
+/* Error messages */
+.alert-danger {
+  @include font-size(15px);
+  background-color: lighten($red, 35%);
+  color: $red;
+}
+
+/* Flash Messages */
+.flash {
+  z-index: 100 !important;
+  position: fixed;
+  top: 10em;
+  right: 2em;
+  color: $white;
+  @include shaddow-box(2);
+  i {
+    display: block;
+    float: left;
+    margin-top: 0.1em;
+    margin-right: 0.5em;
+  }
+}
+
+.flash-error {
+  @include background-opacity($red, 0.7);
+}
+.flash-success {
+  @include background-opacity($green, 0.7);
+}
+
+/* Login Form */
+.login-logo {
+  text-align: center;
+  margin-top: 30%;
+  img {
+    width: 80px;
+  }
+}
+
+.login-form {
+  margin-top: 3em;
+
+  .btn-login {
+    background-color: $green;
+    color: $white;
+    margin-top: 1em;
+  }
+
+  .input-group-addon {
+    padding: 0.2em 0.5em 0 0 !important;
+  }
+
+  .alert-danger i {
+    display: block;
+    float: left;
+    margin-right: 0.3em;
+  }
+
+  @include shaddow-box(3);
+}

@@ -1,0 +1,57 @@
+#sidebar {
+  height: 100%;
+  position: fixed;
+  top: 50px;
+  background-color: $white;
+  border-right: 1px solid darken($light-gray, 10%);
+
+  @include mobile() {
+    width: 100%;
+    z-index: 20;
+    height: auto;
+    margin-top: 0.7em;
+  }
+}
+
+.sidebar .sidebar-nav.navbar-collapse {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.sidebar ul li a {
+  color: darken($gray, 20%);
+  @include mobile() {
+    width: 100%;
+  }
+  i {
+    display: block;
+    float: left;
+    margin-right: 0.3em;
+  }
+}
+
+.sidebar .active a {
+  background-color: $red !important;
+  color: $white !important;
+}
+
+.sidebar ul li {
+  border-bottom: 1px solid darken($white, 10%);
+}
+
+@media(min-width: $screen-sm-min) {
+  .sidebar {
+    z-index: 1;
+    position: absolute;
+    width: 200px;
+  }
+
+  .sidebar_links { margin-top: 50px; }
+
+  .navbar-top-links .dropdown-messages,
+  .navbar-top-links .dropdown-tasks,
+  .navbar-top-links .dropdown-alerts {
+    margin-left: auto;
+  }
+}
+

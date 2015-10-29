@@ -1,0 +1,112 @@
+/* Count and search */
+.count-search {
+
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 1em;
+  color: $gray;
+  .count {
+    float: left;
+    margin-top: 0.2em;
+  }
+  u {
+    color: darken($gray, 10%);
+  }
+  span {
+    color: darken($gray, 10%);
+  }
+
+  #search {
+    float: right;
+    position: relative;
+    top: -0.2em;
+    input {
+      outline: none;
+      width: 15em;
+      padding: 0.1em 0.3em;
+    }
+    @include ipad() {
+      width: 12em;
+    }
+    @media (max-width: $screen-sm-min){
+      float: left;
+      clear: both;
+      top: 0.3em;
+      bottom: 0.5em;
+      width: 100%;
+      input {
+        width: 100%;
+      }
+    }
+
+    .i-search {
+      position: absolute;
+      right: 5px;
+      top: 6px;
+      color: #a9a9a9;
+    }
+  }
+
+}
+
+.filter {
+  color: $gray;
+  margin-left: 20px;
+  margin-top: 3px;
+  select {
+    margin-left: 10px;
+    background-color: inherit;
+  }
+}
+
+.table-responsive {
+  @include font-size(14px);
+}
+
+table, tr, td, thead {
+  border: none !important;
+}
+
+/* Table Actions */
+.table-actions {
+  width: 6em;
+  min-width: 6em;
+}
+
+.action {
+  background-color: $white;
+  width: 2em;
+  height: 2em;
+  @include shaddow-box(1);
+  text-align: center;
+  border-radius: 0.5em;
+  cursor: pointer;
+  @include transition(all 0.3s ease);
+
+  .action-icon {
+    color: $gray;
+    line-height: 2em;
+    @include font-size(15px);
+  }
+  &:hover {
+    @include transition-scale(scale(1.01));
+    @include shaddow-box(2);
+  }
+}
+.action-edit {
+  margin-right: 0.5em;
+}
+
+/* Load More */
+#loadmore {
+  text-align: center;
+  button {
+    background-color: $light-blue;
+    color: $white;
+    @include shaddow-box(1);
+    &:hover {
+      @include transition-scale(scale(1.1));
+      @include shaddow-box(3);
+    }
+  }
+}

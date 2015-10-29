@@ -1,0 +1,64 @@
+/* Main pages header */
+.page-header {
+  color: darken($gray, 30%);
+}
+/* Panel heading */
+.panel-heading {
+  background-color: $gray;
+  border-radius: 0;
+  height: 3em;
+  text-align: center;
+  color: $gray;
+
+  a {
+    line-height: 0.1em;
+    color: $light-blue;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Delete Modal */
+.delete-modal {
+  z-index: 200 !important;
+  position: fixed;
+  top: 4em;
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: 10em;
+  width: 90%;
+  text-align: center;
+
+  .modal-content {
+    @include shaddow-box(3);
+  }
+
+  button {
+    @include shaddow-box(1);
+    background-color: inherit !important;
+    &:hover {
+      background-color: darken($white, 20%);
+      @include shaddow-box(2);
+    }
+  }
+  .dlt-btn {
+    background-color: $red !important;
+    color: $white !important;
+    &:hover {
+      background-color: darken($red, 20%);
+    }
+  }
+}
+
+/* Preloader */
+.preloader {
+  background-color: $white;
+  padding: 0.2em 0.4em;
+  border-radius: 50%;
+  float: left;
+  @include shaddow-box(1);
+}

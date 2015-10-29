@@ -1,0 +1,61 @@
+#navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  margin-bottom: 0;
+  background-color: $white;
+  color: $white;
+  box-shadow: 1px solid $light-gray;
+
+  .navbar-right {
+    a {
+      color: darken($gray, 20);
+      &:hover {
+        color: $light-blue
+      }
+    }
+    .active {
+      color: $light-blue;
+      text-decoration: underline;
+    }
+    margin-right: 20px;
+    margin-top: 20px;
+  }
+
+  .navbar-logo {
+    img {
+      width: 80px;
+      margin-left: 1em;
+      margin-top: 1.1em;
+    }
+  }
+
+  #toggle-sidebar {
+    margin-left: 130px;
+    margin-top: 27px;
+    cursor: pointer;
+    color: darken($light-blue, 20%);
+  }
+
+  .custom_collapse {
+    width: 1.5em;
+    height: 2px;
+    background-color: darken($light-blue, 20%);
+    margin: 0.3em 0em;
+  }
+
+    .admin-user {
+      margin-right: 1em;
+    }
+    .admin-user, .logout {
+      position: relative;
+      i {
+        display: block;
+        float: left;
+        margin-top: 0.1em;
+        margin-right: 0.1em;
+      }
+    }
+
+}
+

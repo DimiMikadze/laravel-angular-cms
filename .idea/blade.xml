@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BladeInjectionConfiguration" escapedTextEnd="!!}" escapedTextStart="{!!">
+    <customDirectives>
+      <data directive="@forelse" injection="true" prefix="&lt;?php foreach(" suffix="): ?&gt;" />
+      <data directive="@foreach" injection="true" prefix="&lt;?php foreach(" suffix="): ?&gt;" />
+      <data directive="@include" injection="true" prefix="&lt;?php echo $__env-&gt;make(" suffix=")-&gt;render(); ?&gt;" />
+      <data directive="@endif" />
+      <data directive="@endwhile" />
+      <data directive="@while" injection="true" prefix="&lt;?php while (" suffix="): ?&gt;" />
+      <data directive="@extends" injection="true" prefix="&lt;?php echo $__env-&gt;make(" suffix=", array_except(get_defined_vars(), array('__data', '__path')))-&gt;render(); ?&gt;" />
+      <data directive="@each" injection="true" prefix="&lt;?php echo $__env-&gt;renderEach(" suffix="); ?&gt;" />
+      <data directive="@endforeach" />
+      <data directive="@yield" injection="true" prefix="&lt;?php echo $__env-&gt;yieldContent(" suffix="); ?&gt;" />
+      <data directive="@lang" injection="true" prefix="&lt;?php echo \Illuminate\Support\Facades\Lang::get(" suffix="); ?&gt;" />
+      <data directive="@else" />
+      <data directive="@unless" injection="true" prefix="&lt;?php if ( ! (" suffix=")): ?&gt;" />
+      <data directive="@append" />
+      <data directive="@stop" />
+      <data directive="@endsection" />
+      <data directive="@endfor" />
+      <data directive="@overwrite" />
+      <data directive="@endforelse" />
+      <data directive="@elseif" injection="true" prefix="&lt;?php elseif (" suffix="): ?&gt;" />
+      <data directive="@parent" />
+      <data directive="@choice" injection="true" prefix="&lt;?php echo \Illuminate\Support\Facades\Lang::choice(" suffix="); ?&gt;" />
+      <data directive="@show" />
+      <data directive="@empty" />
+      <data directive="@if" injection="true" prefix="&lt;?php if (" suffix="): ?&gt;" />
+      <data directive="@endunless" />
+      <data directive="@for" injection="true" prefix="&lt;?php for (" suffix="): ?&gt;" />
+      <data directive="@section" injection="true" prefix="&lt;?php $__env-&gt;startSection(" suffix="); ?&gt;" />
+    </customDirectives>
+  </component>
+</project>
