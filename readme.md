@@ -18,6 +18,10 @@ Password: demodemo  <br />
 
 [http://admin.upmelab.com/admin/login](http://admin.upmelab.com/admin/login)
 
+## Screenshots
+
+![Alt text](/public/admin/images/main/admin.png)
+
 ## Getting Started
 
 Clone Repo
