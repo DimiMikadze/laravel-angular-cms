@@ -111,6 +111,14 @@ output files
 public/admin/css
 ````
 
+## Dependencies
+
+all app dependencies are located to
+
+````
+resources/assets/dep
+````
+
 ## Contributing
 
 contributions are more than welcome!
