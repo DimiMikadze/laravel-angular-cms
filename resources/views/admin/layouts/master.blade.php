@@ -97,8 +97,18 @@
         <!-- Angular views -->
         <div ui-view id="ui-view"></div>
 
-    </div>
 
+        <div id="github">
+            <a href="https://github.com/DimitriMikadze/laravel-angular-cms" target="_blank">
+                <i class="fa fa-github-square"></i>
+                <p>
+                    Fork Me On Github
+                </p>
+            </a>
+        </div>
+
+    </div>
+    
 </div>
 
 @include('admin.layouts.footer')

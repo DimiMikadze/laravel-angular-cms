@@ -32,6 +32,29 @@ a {
 
   #page-wrapper {
     padding: 0 15px;
+    min-height: 40em;
+    overflow: hidden;
+
+    #github {
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      margin-top: 12em;
+
+      img {
+        width: 30px;
+      }
+      i {
+        font-size: 2em;
+      }
+      a {
+        color: $gray;
+        &:hover {
+          color: $light-blue;
+          text-decoration: none;
+        }
+      }
+    }
   }
 
   @media(min-width: $screen-sm-min) {

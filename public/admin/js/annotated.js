@@ -81,9 +81,8 @@
     'use strict';
 
     angular
-        .module('app.posts', [
-            'app.core',
-            'textAngular'
+        .module('app.profile', [
+            'app.core'
         ]);
 
 }());
@@ -92,8 +91,9 @@
     'use strict';
 
     angular
-        .module('app.profile', [
-            'app.core'
+        .module('app.posts', [
+            'app.core',
+            'textAngular'
         ]);
 
 }());
@@ -112,7 +112,7 @@
     'use strict';
 
     angular
-        .module('app.services', [
+        .module('app.users', [
             'app.core'
         ]);
 
@@ -122,7 +122,7 @@
     'use strict';
 
     angular
-        .module('app.users', [
+        .module('app.services', [
             'app.core'
         ]);
 
@@ -693,6 +693,124 @@
     'use strict';
 
     angular
+        .module('app.profile')
+        .controller('ProfileController', ProfileController);
+
+    ProfileController.$inject = ['$http', '$timeout', 'User', 'AuthUser'];
+    /* @ngInject */
+    function ProfileController($http, $timeout, User, AuthUser) {
+
+        var vm = this;
+
+        vm.authuser = {};
+
+        vm.update = update;
+        vm.deleteImage = deleteImage;
+        vm.hideImage = hideImage;
+        authUser();
+
+        /**
+         * Auth user
+         */
+        function authUser() {
+            AuthUser.get().success(function(res) {
+                vm.authUser = res;
+                vm.ready = true;
+            });
+        }
+
+        /**
+         * update
+         */
+        function update() {
+
+            vm.loading = true;
+
+            User.update({id: vm.authUser.id}, vm.authUser, function (res) {
+                _successResponse(res.message);
+            }, function (err) {
+                _errorResponse(err.data, 'User edition failed, see errors below');
+            });
+        }
+
+        /**
+         * Delete image
+         */
+        function deleteImage(id) {
+            $http.post('/admin/api/destroy-user-image', {id: id}).success(function(res) {
+                vm.authUser.file = null;
+                vm.authUser.image = null;
+            });
+        }
+
+        /**
+         * Hide image
+         */
+        function hideImage() {
+            vm.authUser.file = false;
+        }
+
+        /**
+         * Success response
+         */
+        function _successResponse(successMessage) {
+            vm.errors = '';
+            vm.flash = successMessage;
+            vm.loading = false;
+            $timeout(function () {
+                vm.flash = false;
+            }, 5000);
+        }
+
+        /**
+         * Errors response
+         */
+        function _errorResponse(errors, flashError) {
+            vm.errors = errors;
+            vm.loading = false;
+            vm.flashError = flashError;
+            $timeout(function () {
+                vm.flashError = false;
+            }, 5000);
+        }
+
+    }
+
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.profile')
+        .run(appRun);
+
+    appRun.$inject = ['routerHelper'];
+    /* @ngInject */
+    function appRun(routerHelper) {
+        routerHelper.configureStates(getStates());
+    }
+
+    function getStates() {
+        return [
+            {
+                state: 'profile',
+                config: {
+                    url: '/admin/profile',
+                    templateUrl: '/admin/views/admin.profile.index',
+                    controller: 'ProfileController',
+                    controllerAs: 'vm',
+                    title: 'My Profile'
+                }
+            }
+        ];
+    }
+})();
+(function() {
+
+    'use strict';
+
+    angular
         .module('app.posts')
         .controller('PostsController', PostsController);
 
@@ -923,124 +1041,6 @@
         ];
     }
 })();
-(function() {
-
-    'use strict';
-
-    angular
-        .module('app.profile')
-        .controller('ProfileController', ProfileController);
-
-    ProfileController.$inject = ['$http', '$timeout', 'User', 'AuthUser'];
-    /* @ngInject */
-    function ProfileController($http, $timeout, User, AuthUser) {
-
-        var vm = this;
-
-        vm.authuser = {};
-
-        vm.update = update;
-        vm.deleteImage = deleteImage;
-        vm.hideImage = hideImage;
-        authUser();
-
-        /**
-         * Auth user
-         */
-        function authUser() {
-            AuthUser.get().success(function(res) {
-                vm.authUser = res;
-                vm.ready = true;
-            });
-        }
-
-        /**
-         * update
-         */
-        function update() {
-
-            vm.loading = true;
-
-            User.update({id: vm.authUser.id}, vm.authUser, function (res) {
-                _successResponse(res.message);
-            }, function (err) {
-                _errorResponse(err.data, 'User edition failed, see errors below');
-            });
-        }
-
-        /**
-         * Delete image
-         */
-        function deleteImage(id) {
-            $http.post('/admin/api/destroy-user-image', {id: id}).success(function(res) {
-                vm.authUser.file = null;
-                vm.authUser.image = null;
-            });
-        }
-
-        /**
-         * Hide image
-         */
-        function hideImage() {
-            vm.authUser.file = false;
-        }
-
-        /**
-         * Success response
-         */
-        function _successResponse(successMessage) {
-            vm.errors = '';
-            vm.flash = successMessage;
-            vm.loading = false;
-            $timeout(function () {
-                vm.flash = false;
-            }, 5000);
-        }
-
-        /**
-         * Errors response
-         */
-        function _errorResponse(errors, flashError) {
-            vm.errors = errors;
-            vm.loading = false;
-            vm.flashError = flashError;
-            $timeout(function () {
-                vm.flashError = false;
-            }, 5000);
-        }
-
-    }
-
-}());
-(function() {
-
-    'use strict';
-
-    angular
-        .module('app.profile')
-        .run(appRun);
-
-    appRun.$inject = ['routerHelper'];
-    /* @ngInject */
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
-    }
-
-    function getStates() {
-        return [
-            {
-                state: 'profile',
-                config: {
-                    url: '/admin/profile',
-                    templateUrl: '/admin/views/admin.profile.index',
-                    controller: 'ProfileController',
-                    controllerAs: 'vm',
-                    title: 'My Profile'
-                }
-            }
-        ];
-    }
-})();
 /* Help configure the state-base ui.router */
 (function() {
 
@@ -1143,86 +1143,6 @@
     }
 
 })();
-(function() {
-
-    'use strict';
-
-    angular
-        .module("app.services")
-        .factory("AuthUser", AuthUser);
-
-    AuthUser.$inject = ['$http'];
-    /* @ngInject */
-    function AuthUser($http) {
-        var service = {
-            get: get
-        };
-
-        return service;
-
-        function get() {
-            return $http.get('/admin/api/auth-user');
-        }
-    }
-
-}());
-(function() {
-
-    'use strict';
-
-    angular
-        .module("app.gallery")
-        .factory("Gallery", Gallery);
-
-    Gallery.$inject = ['$resource'];
-    /* @ngInject */
-    function Gallery($resource) {
-        return $resource('/admin/api/gallery/:id', {id: '@_id'}, {
-            update: {
-                method: 'PUT'
-            }
-        });
-    }
-
-}());
-(function() {
-
-    'use strict';
-
-    angular
-        .module("app.services")
-        .factory("Post", Post);
-
-    Post.$inject = ['$resource'];
-    /* @ngInject */
-    function Post($resource) {
-        return $resource('/admin/api/posts/:id', {id: '@_id'}, {
-            update: {
-                method: 'PUT'
-            }
-        });
-    }
-
-}());
-(function() {
-
-    'use strict';
-
-    angular
-        .module("app.services")
-        .factory("User", User);
-
-    User.$inject = ['$resource'];
-    /* @ngInject */
-    function User($resource) {
-        return $resource('/admin/api/users/:id', {id: '@_id'}, {
-            update: {
-                method: 'PUT'
-            }
-        });
-    }
-
-}());
 (function() {
 
     'use strict';
@@ -1472,3 +1392,83 @@
         ];
     }
 })();
+(function() {
+
+    'use strict';
+
+    angular
+        .module("app.services")
+        .factory("AuthUser", AuthUser);
+
+    AuthUser.$inject = ['$http'];
+    /* @ngInject */
+    function AuthUser($http) {
+        var service = {
+            get: get
+        };
+
+        return service;
+
+        function get() {
+            return $http.get('/admin/api/auth-user');
+        }
+    }
+
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module("app.gallery")
+        .factory("Gallery", Gallery);
+
+    Gallery.$inject = ['$resource'];
+    /* @ngInject */
+    function Gallery($resource) {
+        return $resource('/admin/api/gallery/:id', {id: '@_id'}, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    }
+
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module("app.services")
+        .factory("Post", Post);
+
+    Post.$inject = ['$resource'];
+    /* @ngInject */
+    function Post($resource) {
+        return $resource('/admin/api/posts/:id', {id: '@_id'}, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    }
+
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module("app.services")
+        .factory("User", User);
+
+    User.$inject = ['$resource'];
+    /* @ngInject */
+    function User($resource) {
+        return $resource('/admin/api/users/:id', {id: '@_id'}, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    }
+
+}());
