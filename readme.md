@@ -21,7 +21,7 @@ git clone https://github.com/DimitriMikadze/laravel-angular-cms.git
 
 Create Database
 
-Cd project and run composer update and npm install
+Cd project and run composer install and npm install
 
 ````
 cd laravel-angular-cms
