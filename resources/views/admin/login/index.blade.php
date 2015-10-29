@@ -32,6 +32,9 @@
                         </div>
                     </div>
 
+                    <p style="font-size: 14px;">Emal: demo@demo.com</p>
+                    <p style="font-size: 14px; margin-top: -20px">password: demodemo</p>
+
                     <!-- Remember -->
                     <div class="remember">
                         <input type='checkbox' name='remember' value='1' ng-model="vm.user.remember">
