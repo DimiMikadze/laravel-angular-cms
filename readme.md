@@ -69,7 +69,7 @@ php artisan serve
 Navigate to
 
 ````
-localhost:8000/admin/profile
+localhost:8000/admin/login
 ````
 
 User credentials:
