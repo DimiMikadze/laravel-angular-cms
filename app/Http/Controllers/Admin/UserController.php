@@ -111,7 +111,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->id == 48)
+        if($request->id == 51)
         {
             return response()->json(['oldpassword' => 'Old password is not correct'], 422);
         }
