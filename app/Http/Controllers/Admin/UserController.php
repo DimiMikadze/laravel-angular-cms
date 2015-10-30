@@ -111,6 +111,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->id == 48)
+        {
+            return response()->json(['oldpassword' => 'Old password is not correct'], 422);
+        }
+
         $this->validate($request, [
             'name'          => 'required|min:3|max:20',
             'email'         => 'required|email|unique:users,email,' . $id,
