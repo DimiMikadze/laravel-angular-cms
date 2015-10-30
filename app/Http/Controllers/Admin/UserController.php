@@ -113,7 +113,7 @@ class UserController extends Controller
     {
         if($request->id == 51)
         {
-            return response()->json(['oldpassword' => 'Old password is not correct'], 422);
+            return response()->json(['demo' => 'You cant eddit demo user'], 422);
         }
 
         $this->validate($request, [
