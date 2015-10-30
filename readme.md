@@ -7,6 +7,7 @@ CMS built on Laravel 5.1, AngularJS 1.4.7 and Responsive Material Design
 - Users/User Roles, Posts, Gallery, Profile  CRUD
 - Authentication
 - John papa Angular style
+- Laravel rest API
 - Responsive Material Design
 - Image Manipulation
 - Sass
