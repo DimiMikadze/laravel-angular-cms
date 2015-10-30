@@ -7,7 +7,7 @@ CMS built on Laravel 5.1, AngularJS 1.4.7 and Material Design
 - Users/User Roles, Posts, Gallery, Profile  CRUD
 - Authentication
 - John papa Angular style
-- Material Design
+- Responsive Material Design
 - Image Manipulation
 - Sass
 

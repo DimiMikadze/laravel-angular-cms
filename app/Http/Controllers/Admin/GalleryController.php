@@ -230,7 +230,7 @@ class GalleryController extends Controller
             $gallery->update(['image' => '']);
         }
 
-        return response()->json(['message' => 'User image successfully deleted']);
+        return response()->json(['message' => 'Gallery image successfully deleted']);
     }
 
     /**
