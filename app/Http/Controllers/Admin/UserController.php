@@ -113,7 +113,7 @@ class UserController extends Controller
     {
         if($request->id == 51)
         {
-            return response()->json(['demo' => 'You cant eddit demo user'], 422);
+            return response()->json(['demo' => "You aren't allowed to edit the demo user"], 422);
         }
 
         $this->validate($request, [
@@ -125,7 +125,7 @@ class UserController extends Controller
 
         if($request->password && strlen($request->password) < 6)
         {
-            return response()->json(["password" => "Password at least 6 characters"], 422);
+            return response()->json(["password" => "Your password must be at least 6 characters"], 422);
         }
 
         $user = User::find($id);

@@ -165,7 +165,7 @@ class GalleryController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Gallery successfully Updated']);
+        return response()->json(['message' => 'Gallery updated successfully']);
     }
 
     /**

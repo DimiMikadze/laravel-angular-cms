@@ -85,7 +85,7 @@ class PostController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Post successfully Created']);
+        return response()->json(['message' => 'Post created successfully']);
     }
 
     /**
@@ -165,7 +165,7 @@ class PostController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Post successfully Updated']);
+        return response()->json(['message' => 'Post updated successfully']);
     }
 
     /**

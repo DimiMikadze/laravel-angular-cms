@@ -46,10 +46,10 @@ class LoginController extends Controller
                 return response()->json(["message" => "Welcome"]);
             }
 
-            return response()->json(["Email or Password is not correct"], 422);
+            return response()->json(["The email or password you entered is not correct"], 422);
         }
 
-        return response()->json(["Email or Password is not correct"], 422);
+        return response()->json(["The email or password you entered is not correct"], 422);
     }
 
     /**
