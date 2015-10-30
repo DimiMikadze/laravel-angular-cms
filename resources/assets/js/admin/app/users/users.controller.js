@@ -67,7 +67,7 @@
             vm.loading = true;
 
             User.save(vm.user, function (res) {
-                _successResponse(res.message)
+                _successResponse(res.message);
                 vm.user = {
                     user_roles: {
                         role: 'Role'
@@ -85,7 +85,7 @@
             vm.loading = true;
 
             User.update({id: vm.user.id}, vm.user, function (res) {
-                _successResponse(res.message)
+                _successResponse(res.message);
             }, function (err) {
                 _errorResponse(err.data, "User edition failed see errors below");
             });
