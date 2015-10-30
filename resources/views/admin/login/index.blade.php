@@ -2,7 +2,7 @@
 
 <div class="container" ng-controller="LoginController as vm">
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-6 col-md-offset-3">
 
             <div class="login-logo">
                 <img src="/admin/images/main/upme-white-shaddow.png" alt="Upme logo">
@@ -11,6 +11,8 @@
             <div class="login-panel panel panel-default login-form">
 
                 <div class="panel-body">
+
+                    <form>
 
                     <!-- errors -->
                     <div class="alert alert-danger" role="alert" ng-if="vm.error">
@@ -42,7 +44,9 @@
                     </div>
 
                     <!-- Submit -->
-                    <button type='submit' value="Login" class="btn btn-login" ng-click="vm.login()">Login</button>
+                    <input type='submit' value="Login" class="btn btn-login" ng-click="vm.login()" value="Login"></input>
+
+                    </form>
 
                 </div>
             </div>

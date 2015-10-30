@@ -61,7 +61,7 @@
     'use strict';
 
     angular
-        .module('app.gallery', [
+        .module('app.login', [
             'app.core'
         ]);
 
@@ -71,8 +71,9 @@
     'use strict';
 
     angular
-        .module('app.login', [
-            'app.core'
+        .module('app.posts', [
+            'app.core',
+            'textAngular'
         ]);
 
 }());
@@ -91,9 +92,8 @@
     'use strict';
 
     angular
-        .module('app.posts', [
-            'app.core',
-            'textAngular'
+        .module('app.gallery', [
+            'app.core'
         ]);
 
 }());
@@ -395,242 +395,6 @@
     'use strict';
 
     angular
-        .module('app.gallery')
-        .controller('GalleryController', GalleryController);
-
-    GalleryController.$inject = ['$http', '$timeout', '$stateParams', 'Gallery'];
-    /* @ngInject */
-    function GalleryController($http, $timeout, $stateParams, Gallery) {
-
-        var vm = this;
-
-        vm.galleries = {};
-        vm.gallery = {};
-
-        vm.create = create;
-        vm.update = update;
-        vm.deleteGallery = deleteGallery;
-        vm.hideImage = hideImage;
-        vm.showDeleteModal = showDeleteModal;
-        vm.hideDeleteModal = hideDeleteModal;
-        vm.deleteImage = deleteImage;
-        vm.liveSearch = liveSearch;
-        vm.loadMore = loadMore;
-
-        if(! $stateParams.id) { getGalleries(); }
-        if($stateParams.id) { getGallery(); }
-
-        /**
-         * Get all
-         */
-        function getGalleries() {
-            Gallery.get(function (res) {
-                vm.galleries = res.data;
-                vm.total = res.total;
-                vm.next = res.next_page_url;
-                vm.ready = true;
-            });
-        }
-
-        /**
-         * find by id
-         */
-        function getGallery() {
-            vm.gallery = Gallery.get({id: $stateParams.id}, function() {
-                vm.ready = true;
-                vm.gallery.date = new Date(vm.gallery.date);
-            });
-        }
-
-        /**
-         * Create
-         */
-        function create() {
-            vm.loading = true;
-
-            Gallery.save(vm.gallery, function(res) {
-                _successResponse(res.message);
-                vm.gallery = '';
-            }, function (err) {
-                _errorResponse(err.data, 'Gallery creation failed, see errors below');
-            });
-        }
-
-        /**
-         * Update
-         */
-        function update() {
-            vm.loading = true;
-
-            Gallery.update({id: vm.gallery.id}, vm.gallery, function (res) {
-                _successResponse(res.message);
-            }, function (err) {
-                _errorResponse(err.data, 'Gallery edition failed, see errors below');
-            });
-        }
-
-        /**
-         * Delete image
-         */
-        function deleteImage(id, file, image_id) {
-
-            if(image_id) {
-                $http.post('/admin/api/destroy-gallery-image', {id: id, image_id: image_id}).success(function(res) {
-                    var index = vm.gallery.gallery_images.indexOf(file);
-                    vm.gallery.gallery_images.splice(index, 1);
-                });
-            } else {
-                $http.post('/admin/api/destroy-gallery-image', {id: id }).success(function(res) {
-                    vm.gallery.image = null;
-                });
-            }
-        }
-
-        /**
-         * Hide Image
-         */
-        function hideImage(file) {
-            if(file) {
-                var index = vm.gallery.files.indexOf(file);
-                vm.gallery.files.splice(index, 1);
-            } else {
-                document.getElementById('single-uploader').value = null;
-                vm.gallery.file = null;
-            }
-        }
-
-        /**
-         * Show delete modal
-         */
-        function showDeleteModal(gallery) {
-            vm.gallery = gallery;
-            vm.deleteModal = true;
-        }
-
-        /**
-         * Delete
-         */
-        function deleteGallery() {
-            Gallery.delete({id: vm.gallery.id}, function (res) {
-                vm.galleries.splice(vm.galleries.indexOf(vm.gallery), 1);
-                vm.total = vm.total - 1;
-                vm.deleteModal = false;
-                vm.flash = res.message;
-                $timeout(function () {
-                    vm.flash = false;
-                }, 3000);
-            });
-        }
-
-        /**
-         * Hide delete modal
-         */
-        function hideDeleteModal() {
-            vm.deleteModal = false;
-        }
-
-        /**
-         * load more
-         */
-        function loadMore(url) {
-            $http.get(url).success(function (res) {
-                vm.galleries = vm.galleries.concat(res.data);
-                vm.next = res.next_page_url;
-            });
-        }
-
-        /**
-         * Live search
-         */
-        function liveSearch() {
-            $http.post('/admin/api/gallery/search', {keyword: vm.search}).success(function (res) {
-                vm.galleries = res.data;
-                vm.total = res.total;
-                vm.next = res.next_page_url;
-            });
-        }
-
-        /**
-         * Success response
-         */
-        function _successResponse(successMessage) {
-            vm.errors = '';
-            vm.flash = successMessage;
-            vm.loading = false;
-            $timeout(function () {
-                vm.flash = false;
-            }, 5000);
-        }
-
-        /**
-         * Errors response
-         */
-        function _errorResponse(errors, flashError) {
-            vm.errors = errors;
-            vm.loading = false;
-            vm.flashError = flashError;
-            $timeout(function () {
-                vm.flashError = false;
-            }, 5000);
-        }
-
-    }
-
-}());
-(function() {
-
-    'use strict';
-
-    angular
-        .module('app.gallery')
-        .run(appRun);
-
-    appRun.$inject = ['routerHelper'];
-    /* @ngInject */
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
-    }
-
-    function getStates() {
-        return [
-            {
-                state: 'gallery',
-                config: {
-                    url: '/admin/gallery',
-                    templateUrl: '/admin/views/admin.gallery.index',
-                    controller: 'GalleryController',
-                    controllerAs: 'vm',
-                    title: 'Gallery'
-                }
-            },
-            {
-                state: 'gallery-create',
-                config: {
-                    url: '/admin/gallery/create',
-                    templateUrl: '/admin/views/admin.gallery.create',
-                    controller: 'GalleryController',
-                    controllerAs: 'vm',
-                    title: 'Create Gallery'
-                }
-            },
-            {
-                state: 'gallery-edit',
-                config: {
-                    url: '/admin/gallery/:id/edit',
-                    templateUrl: '/admin/views/admin.gallery.edit',
-                    controller: 'GalleryController',
-                    controllerAs: 'vm',
-                    title: 'Edit Gallery'
-                }
-            }
-        ];
-    }
-})();
-(function() {
-
-    'use strict';
-
-    angular
         .module("app.login")
         .controller('LoginController', LoginController);
 
@@ -683,124 +447,6 @@
                     controller: 'LoginController',
                     controllerAs: 'vm',
                     title: 'Login'
-                }
-            }
-        ];
-    }
-})();
-(function() {
-
-    'use strict';
-
-    angular
-        .module('app.profile')
-        .controller('ProfileController', ProfileController);
-
-    ProfileController.$inject = ['$http', '$timeout', 'User', 'AuthUser'];
-    /* @ngInject */
-    function ProfileController($http, $timeout, User, AuthUser) {
-
-        var vm = this;
-
-        vm.authuser = {};
-
-        vm.update = update;
-        vm.deleteImage = deleteImage;
-        vm.hideImage = hideImage;
-        authUser();
-
-        /**
-         * Auth user
-         */
-        function authUser() {
-            AuthUser.get().success(function(res) {
-                vm.authUser = res;
-                vm.ready = true;
-            });
-        }
-
-        /**
-         * update
-         */
-        function update() {
-
-            vm.loading = true;
-
-            User.update({id: vm.authUser.id}, vm.authUser, function (res) {
-                _successResponse(res.message);
-            }, function (err) {
-                _errorResponse(err.data, 'User edition failed, see errors below');
-            });
-        }
-
-        /**
-         * Delete image
-         */
-        function deleteImage(id) {
-            $http.post('/admin/api/destroy-user-image', {id: id}).success(function(res) {
-                vm.authUser.file = null;
-                vm.authUser.image = null;
-            });
-        }
-
-        /**
-         * Hide image
-         */
-        function hideImage() {
-            vm.authUser.file = false;
-        }
-
-        /**
-         * Success response
-         */
-        function _successResponse(successMessage) {
-            vm.errors = '';
-            vm.flash = successMessage;
-            vm.loading = false;
-            $timeout(function () {
-                vm.flash = false;
-            }, 5000);
-        }
-
-        /**
-         * Errors response
-         */
-        function _errorResponse(errors, flashError) {
-            vm.errors = errors;
-            vm.loading = false;
-            vm.flashError = flashError;
-            $timeout(function () {
-                vm.flashError = false;
-            }, 5000);
-        }
-
-    }
-
-}());
-(function() {
-
-    'use strict';
-
-    angular
-        .module('app.profile')
-        .run(appRun);
-
-    appRun.$inject = ['routerHelper'];
-    /* @ngInject */
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
-    }
-
-    function getStates() {
-        return [
-            {
-                state: 'profile',
-                config: {
-                    url: '/admin/profile',
-                    templateUrl: '/admin/views/admin.profile.index',
-                    controller: 'ProfileController',
-                    controllerAs: 'vm',
-                    title: 'My Profile'
                 }
             }
         ];
@@ -1036,6 +682,360 @@
                     controller: 'PostsController',
                     controllerAs: 'vm',
                     title: 'Edit Post'
+                }
+            }
+        ];
+    }
+})();
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.profile')
+        .controller('ProfileController', ProfileController);
+
+    ProfileController.$inject = ['$http', '$timeout', 'User', 'AuthUser'];
+    /* @ngInject */
+    function ProfileController($http, $timeout, User, AuthUser) {
+
+        var vm = this;
+
+        vm.authuser = {};
+
+        vm.update = update;
+        vm.deleteImage = deleteImage;
+        vm.hideImage = hideImage;
+        authUser();
+
+        /**
+         * Auth user
+         */
+        function authUser() {
+            AuthUser.get().success(function(res) {
+                vm.authUser = res;
+                vm.ready = true;
+            });
+        }
+
+        /**
+         * update
+         */
+        function update() {
+
+            vm.loading = true;
+
+            User.update({id: vm.authUser.id}, vm.authUser, function (res) {
+                _successResponse(res.message);
+            }, function (err) {
+                _errorResponse(err.data, 'User edition failed, see errors below');
+            });
+        }
+
+        /**
+         * Delete image
+         */
+        function deleteImage(id) {
+            $http.post('/admin/api/destroy-user-image', {id: id}).success(function(res) {
+                vm.authUser.file = null;
+                vm.authUser.image = null;
+            });
+        }
+
+        /**
+         * Hide image
+         */
+        function hideImage() {
+            vm.authUser.file = false;
+        }
+
+        /**
+         * Success response
+         */
+        function _successResponse(successMessage) {
+            vm.errors = '';
+            vm.flash = successMessage;
+            vm.loading = false;
+            $timeout(function () {
+                vm.flash = false;
+            }, 5000);
+        }
+
+        /**
+         * Errors response
+         */
+        function _errorResponse(errors, flashError) {
+            vm.errors = errors;
+            vm.loading = false;
+            vm.flashError = flashError;
+            $timeout(function () {
+                vm.flashError = false;
+            }, 5000);
+        }
+
+    }
+
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.profile')
+        .run(appRun);
+
+    appRun.$inject = ['routerHelper'];
+    /* @ngInject */
+    function appRun(routerHelper) {
+        routerHelper.configureStates(getStates());
+    }
+
+    function getStates() {
+        return [
+            {
+                state: 'profile',
+                config: {
+                    url: '/admin/profile',
+                    templateUrl: '/admin/views/admin.profile.index',
+                    controller: 'ProfileController',
+                    controllerAs: 'vm',
+                    title: 'My Profile'
+                }
+            }
+        ];
+    }
+})();
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.gallery')
+        .controller('GalleryController', GalleryController);
+
+    GalleryController.$inject = ['$http', '$timeout', '$stateParams', 'Gallery'];
+    /* @ngInject */
+    function GalleryController($http, $timeout, $stateParams, Gallery) {
+
+        var vm = this;
+
+        vm.galleries = {};
+        vm.gallery = {};
+
+        vm.create = create;
+        vm.update = update;
+        vm.deleteGallery = deleteGallery;
+        vm.hideImage = hideImage;
+        vm.showDeleteModal = showDeleteModal;
+        vm.hideDeleteModal = hideDeleteModal;
+        vm.deleteImage = deleteImage;
+        vm.liveSearch = liveSearch;
+        vm.loadMore = loadMore;
+
+        if(! $stateParams.id) { getGalleries(); }
+        if($stateParams.id) { getGallery(); }
+
+        /**
+         * Get all
+         */
+        function getGalleries() {
+            Gallery.get(function (res) {
+                vm.galleries = res.data;
+                vm.total = res.total;
+                vm.next = res.next_page_url;
+                vm.ready = true;
+            });
+        }
+
+        /**
+         * find by id
+         */
+        function getGallery() {
+            vm.gallery = Gallery.get({id: $stateParams.id}, function() {
+                vm.ready = true;
+                vm.gallery.date = new Date(vm.gallery.date);
+            });
+        }
+
+        /**
+         * Create
+         */
+        function create() {
+            vm.loading = true;
+
+            Gallery.save(vm.gallery, function(res) {
+                _successResponse(res.message);
+                vm.gallery = '';
+            }, function (err) {
+                _errorResponse(err.data, 'Gallery creation failed, see errors below');
+            });
+        }
+
+        /**
+         * Update
+         */
+        function update() {
+            vm.loading = true;
+
+            Gallery.update({id: vm.gallery.id}, vm.gallery, function (res) {
+                _successResponse(res.message);
+            }, function (err) {
+                _errorResponse(err.data, 'Gallery edition failed, see errors below');
+            });
+        }
+
+        /**
+         * Delete image
+         */
+        function deleteImage(id, file, image_id) {
+
+            if(image_id) {
+                $http.post('/admin/api/destroy-gallery-image', {id: id, image_id: image_id}).success(function(res) {
+                    var index = vm.gallery.gallery_images.indexOf(file);
+                    vm.gallery.gallery_images.splice(index, 1);
+                });
+            } else {
+                $http.post('/admin/api/destroy-gallery-image', {id: id }).success(function(res) {
+                    vm.gallery.image = null;
+                });
+            }
+        }
+
+        /**
+         * Hide Image
+         */
+        function hideImage(file) {
+            if(file) {
+                var index = vm.gallery.files.indexOf(file);
+                vm.gallery.files.splice(index, 1);
+            } else {
+                document.getElementById('single-uploader').value = null;
+                vm.gallery.file = null;
+            }
+        }
+
+        /**
+         * Show delete modal
+         */
+        function showDeleteModal(gallery) {
+            vm.gallery = gallery;
+            vm.deleteModal = true;
+        }
+
+        /**
+         * Delete
+         */
+        function deleteGallery() {
+            Gallery.delete({id: vm.gallery.id}, function (res) {
+                vm.galleries.splice(vm.galleries.indexOf(vm.gallery), 1);
+                vm.total = vm.total - 1;
+                vm.deleteModal = false;
+                vm.flash = res.message;
+                $timeout(function () {
+                    vm.flash = false;
+                }, 3000);
+            });
+        }
+
+        /**
+         * Hide delete modal
+         */
+        function hideDeleteModal() {
+            vm.deleteModal = false;
+        }
+
+        /**
+         * load more
+         */
+        function loadMore(url) {
+            $http.get(url).success(function (res) {
+                vm.galleries = vm.galleries.concat(res.data);
+                vm.next = res.next_page_url;
+            });
+        }
+
+        /**
+         * Live search
+         */
+        function liveSearch() {
+            $http.post('/admin/api/gallery/search', {keyword: vm.search}).success(function (res) {
+                vm.galleries = res.data;
+                vm.total = res.total;
+                vm.next = res.next_page_url;
+            });
+        }
+
+        /**
+         * Success response
+         */
+        function _successResponse(successMessage) {
+            vm.errors = '';
+            vm.flash = successMessage;
+            vm.loading = false;
+            $timeout(function () {
+                vm.flash = false;
+            }, 5000);
+        }
+
+        /**
+         * Errors response
+         */
+        function _errorResponse(errors, flashError) {
+            vm.errors = errors;
+            vm.loading = false;
+            vm.flashError = flashError;
+            $timeout(function () {
+                vm.flashError = false;
+            }, 5000);
+        }
+
+    }
+
+}());
+(function() {
+
+    'use strict';
+
+    angular
+        .module('app.gallery')
+        .run(appRun);
+
+    appRun.$inject = ['routerHelper'];
+    /* @ngInject */
+    function appRun(routerHelper) {
+        routerHelper.configureStates(getStates());
+    }
+
+    function getStates() {
+        return [
+            {
+                state: 'gallery',
+                config: {
+                    url: '/admin/gallery',
+                    templateUrl: '/admin/views/admin.gallery.index',
+                    controller: 'GalleryController',
+                    controllerAs: 'vm',
+                    title: 'Gallery'
+                }
+            },
+            {
+                state: 'gallery-create',
+                config: {
+                    url: '/admin/gallery/create',
+                    templateUrl: '/admin/views/admin.gallery.create',
+                    controller: 'GalleryController',
+                    controllerAs: 'vm',
+                    title: 'Create Gallery'
+                }
+            },
+            {
+                state: 'gallery-edit',
+                config: {
+                    url: '/admin/gallery/:id/edit',
+                    templateUrl: '/admin/views/admin.gallery.edit',
+                    controller: 'GalleryController',
+                    controllerAs: 'vm',
+                    title: 'Edit Gallery'
                 }
             }
         ];

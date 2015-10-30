@@ -149,7 +149,7 @@ button {
 /* Login Form */
 .login-logo {
   text-align: center;
-  margin-top: 30%;
+  margin-top: 20%;
   img {
     width: 80px;
   }
@@ -157,6 +157,9 @@ button {
 
 .login-form {
   margin-top: 3em;
+  .alert-danger {
+    @include font-size(14px);
+  }
 
   .btn-login {
     background-color: $green;
