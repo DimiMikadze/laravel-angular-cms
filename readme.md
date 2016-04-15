@@ -17,7 +17,7 @@ CMS built on Laravel 5.1, AngularJS 1.4.7 and Responsive Material Design
 Email: demo@demo.com    <br />
 Password: demodemo  <br />
 
-[http://admin.upmelab.com/admin/login](http://admin.upmelab.com/admin/login)
+[http://admin.http://128.199.34.169.com/admin/login](http://admin.upmelab.com/admin/login)
 
 ## Screenshot
 
