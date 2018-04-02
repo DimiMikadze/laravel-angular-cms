@@ -21,7 +21,7 @@ CMS built on Laravel 5.1, AngularJS 1.4.7 and Responsive Material Design
 Clone Repo
 
 ````
-git clone https://github.com/DimitriMikadze/laravel-angular-cms.git
+git clone https://github.com/DimiMikadze/laravel-angular-cms.git
 ````
 
 Create Database
